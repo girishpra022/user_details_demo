@@ -3,9 +3,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button,
   Grid,
-  Typography,
 } from "@mui/material";
 import { FC } from "react";
 import { IUser } from "../../../interface/user";
@@ -17,6 +15,7 @@ import Spinner from "../../../components/Spinner";
 import { Snackbar } from "../../../components/Snackbar";
 import ContainerBox from "../../../components/ContainerBox";
 import InputField from "../../../components/InputField";
+import Button from "../../../components/Button";
 
 interface IProps {
   open: boolean;
@@ -44,6 +43,7 @@ const UserForm: FC<IProps> = ({ open, setOpen, handleRefresh }) => {
 
   const handleClose = () => {
     setOpen(false);
+    reset();
   };
 
   const postUserData = async (values: IUser) => {
@@ -92,11 +92,9 @@ const UserForm: FC<IProps> = ({ open, setOpen, handleRefresh }) => {
                   type="text"
                   props={{ name: "firstName", control: control }}
                   sx={{ minWidth: 300 }}
-                  required
+                  hasError={!!errors.firstName}
+                  errorMessage={errors.firstName?.message}
                 />
-                {errors.firstName && (
-                  <Typography>{errors.firstName.message}</Typography>
-                )}
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <InputField
@@ -105,11 +103,9 @@ const UserForm: FC<IProps> = ({ open, setOpen, handleRefresh }) => {
                   type="text"
                   props={{ name: "lastName", control: control }}
                   sx={{ minWidth: 300 }}
-                  required
+                  hasError={!!errors.lastName}
+                  errorMessage={errors.lastName?.message}
                 />
-                {errors.lastName && (
-                  <Typography>{errors.lastName.message}</Typography>
-                )}
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <InputField
@@ -118,19 +114,17 @@ const UserForm: FC<IProps> = ({ open, setOpen, handleRefresh }) => {
                   type="email"
                   props={{ name: "email", control: control }}
                   sx={{ minWidth: 300 }}
-                  required
+                  hasError={!!errors.email}
+                  errorMessage={errors.email?.message}
                 />
-                {errors.email && (
-                  <Typography>{errors.email.message}</Typography>
-                )}
               </Grid>
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} variant="contained">
+            <Button onClick={handleClose} variant="contained" sx={{borderRadius:15}}>
               Cancel
             </Button>
-            <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained"  sx={{borderRadius:15}}>
               Submit
             </Button>
           </DialogActions>
