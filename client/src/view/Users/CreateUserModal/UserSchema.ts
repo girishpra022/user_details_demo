@@ -4,15 +4,18 @@ import { z, ZodType } from "zod";
 
 export const UserSchema: ZodType<IUser> = z
   .object({
-    email: z.string({message:'include valid email'}).email(),
+    email: z.string({message:'Email is required'}).email({message:'Please enter valid email'}),
     lastName: z
-    .string()
-    .max(100, { message: "Last Name is too long" }),
+    .string({message:"Last Name is Required"})
+    .max(100, { message: "Last Name is too long" }).refine((value)=>
+      /^[a-zA-Z]+$/.test(value),
+      "Last name should contain only alphabetical characters"
+    ),
     firstName: z
-      .string(({message:'First Name is required'})).min(1, { message: "Last Name is too short" }).max(100, "First name should be less than 100 characters")
+      .string(({message:'First Name is required'})).min(1, { message: "First Name is too short" }).max(100, "First name should be less than 100 characters")
       .refine((value)=>
         /^[a-zA-Z]+$/.test(value),
-        "First name should contain only alphabetical characters"
+        "Last name should contain only alphabetical characters"
       ),
   })
   
