@@ -4,6 +4,7 @@ import {
   DialogContent,
   DialogActions,
   Grid,
+  Button,
 } from "@mui/material";
 import { FC } from "react";
 import { IUser } from "../../../interface/user";
@@ -15,7 +16,7 @@ import Spinner from "../../../components/Spinner";
 import { Snackbar } from "../../../components/Snackbar";
 import ContainerBox from "../../../components/ContainerBox";
 import InputField from "../../../components/InputField";
-import Button from "../../../components/Button";
+
 
 interface IProps {
   open: boolean;
