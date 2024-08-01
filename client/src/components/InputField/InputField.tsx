@@ -42,7 +42,6 @@ const InputField: FC<IProps> = ({
       label={label}
       placeholder={placeholder}
       required={required}
-      value=""
       disabled={disabled}
       variant="outlined"
       sx={sx}
