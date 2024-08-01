@@ -1,6 +1,6 @@
-import { SxProps, TextField, Theme } from "@mui/material";
+import { FormHelperText, SxProps, TextField, Theme } from "@mui/material";
 import { FC } from "react";
-import { useController, UseControllerProps } from "react-hook-form";
+import { FieldErrors, useController, UseControllerProps } from "react-hook-form";
 
 export type InputType = "text" | "email" | "number";
 
@@ -11,10 +11,12 @@ interface IProps {
   type: InputType;
   className?: string;
   variant?: string;
-  required: boolean;
+  required?: boolean;
   disabled?: boolean;
   props: UseControllerProps<any>;
   sx?: SxProps<Theme>;
+  hasError: boolean;
+  errorMessage?: string;
 }
 
 const InputField: FC<IProps> = ({
@@ -26,10 +28,13 @@ const InputField: FC<IProps> = ({
   disabled = false,
   props,
   sx,
+  hasError = false,
+  errorMessage,
 }) => {
   const { field } = useController(props);
 
   return (
+    <>
     <TextField
       {...field}
       id={name}
@@ -37,11 +42,15 @@ const InputField: FC<IProps> = ({
       label={label}
       placeholder={placeholder}
       required={required}
+      value=""
       disabled={disabled}
       variant="outlined"
       sx={sx}
+      error={hasError}
       fullWidth
     />
+    {hasError && <FormHelperText id="component-error-text" sx={{minWidth:350, color:'red'}}>{errorMessage}</FormHelperText>} 
+    </>
   );
 };
 
