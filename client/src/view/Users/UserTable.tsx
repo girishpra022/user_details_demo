@@ -7,8 +7,8 @@ import { IUser } from "../../interface/user";
 
 interface ITable {
   rows: IUser[];
-  pageSize?: number;
-  pageSizeOptions?: number[];
+  pageSize: number;
+  pageSizeOptions: number[];
   loading: boolean;
 }
 
@@ -35,8 +35,8 @@ const columns: GridColDef<IUser[][number]>[] = [
 
 const UserTable: FC<ITable> = ({
   rows,
-  pageSize = 10,
-  pageSizeOptions = [5, 10, 15, 20, 25, 30, 50, 100],
+  pageSize,
+  pageSizeOptions,
   loading,
 }) => {
   function QuickSearchToolbar() {
