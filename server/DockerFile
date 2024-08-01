@@ -1,23 +1,25 @@
-# backend/Dockerfile
-FROM node:18-alpine AS builder
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm install
-
-COPY tsconfig.json ./
-COPY src ./src
-RUN npm run build
-
-# Production stage
 FROM node:18-alpine
 
+# Set the working directory
 WORKDIR /app
 
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/dist ./dist
-RUN npm install --only=production
+# Copy the package.json and package-lock.json files
+COPY package*.json ./
 
+# Install all dependencies (both runtime and build-time)
+RUN npm install
+
+# Copy the remaining files
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Remove the source files and unnecessary dependencies to reduce the image size
+RUN npm prune --production
+
+# Expose the application port
 EXPOSE 4000
+
+# Run the application
 CMD ["node", "dist/index.js"]
