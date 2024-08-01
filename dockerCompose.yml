@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+      - ./server/src:/app/src
+      - ./server/tsconfig.json:/app/tsconfig.json
+      - ./server/package.json:/app/package.json
+      - ./server/package-lock.json:/app/package-lock.json
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - DB_USER=sapiens_user
+      - DB_PASS=7Q1wpZ9yJfW4PoDz
+      - DB_NAME=userDB
+    command: npm start
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client/src:/app/src
+      - ./client/tsconfig.json:/app/tsconfig.json
+      - ./client/package.json:/app/package.json
+      - ./client/package-lock.json:/app/package-lock.json
+    ports:
+      - "5173:80"
+    environment:
+      - NODE_ENV=production
+
+  db:
+    image: mongo:4.4
+    volumes:
+      - db-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: user_data
+      MONGO_INITDB_ROOT_USERNAME: sapiens_user
+      MONGO_INITDB_ROOT_PASSWORD: 7Q1wpZ9yJfW4PoDz
+
+volumes:
+  db-data:
