@@ -6,6 +6,7 @@ import { Button, Grid, Paper, Typography } from "@mui/material";
 import { UserForm } from "./CreateUserModal";
 import { Snackbar } from "../../components/Snackbar";
 
+const pageSizeOptions=[5,10,15,20];
 
 const Users: FC<{}> = () => {
   const [open, setOpen] = useState(false);
@@ -44,7 +45,7 @@ const Users: FC<{}> = () => {
           alignContent="center"
         >
           <Grid item>
-            <Button onClick={handleCreateUser} variant="contained">
+            <Button onClick={handleCreateUser} variant="contained" sx={{borderRadius:15}}>
               Create User
             </Button>
           </Grid>
@@ -57,7 +58,7 @@ const Users: FC<{}> = () => {
           </Grid>
         </Grid>
 
-        <UserTable rows={data?.data || []} loading={isLoading} />
+        <UserTable rows={data?.data || []} loading={isLoading} pageSize={10} pageSizeOptions={pageSizeOptions}/>
         <UserForm
           open={open}
           setOpen={handleCreateUser}
