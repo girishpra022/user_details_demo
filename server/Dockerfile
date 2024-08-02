@@ -1,0 +1,24 @@
+FROM node:18-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the package.json and package-lock.json files
+COPY package*.json ./
+
+# Install all dependencies (both runtime and build-time)
+RUN npm install
+
+# Copy the remaining files
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Remove the source files and unnecessary dependencies to reduce the image size
+RUN npm prune --production
+
+# Expose the application port
+EXPOSE 4000
+
+# Run the application
