@@ -17,7 +17,6 @@ import { Snackbar } from "../../../components/Snackbar";
 import ContainerBox from "../../../components/ContainerBox";
 import InputField from "../../../components/InputField";
 
-
 interface IProps {
   open: boolean;
   setOpen: (state: boolean) => void;
@@ -39,8 +38,6 @@ const UserForm: FC<IProps> = ({ open, setOpen, handleRefresh }) => {
   const { mutateAsync, isLoading, isSuccess, isError, error } = useUpdateUser(
     {}
   );
-
-  console.log('error', error);
 
   const handleClose = () => {
     setOpen(false);
@@ -95,6 +92,7 @@ const UserForm: FC<IProps> = ({ open, setOpen, handleRefresh }) => {
                   sx={{ minWidth: 300 }}
                   hasError={!!errors.firstName}
                   errorMessage={errors.firstName?.message}
+                  required
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
@@ -106,6 +104,7 @@ const UserForm: FC<IProps> = ({ open, setOpen, handleRefresh }) => {
                   sx={{ minWidth: 300 }}
                   hasError={!!errors.lastName}
                   errorMessage={errors.lastName?.message}
+                  required
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
@@ -117,15 +116,20 @@ const UserForm: FC<IProps> = ({ open, setOpen, handleRefresh }) => {
                   sx={{ minWidth: 300 }}
                   hasError={!!errors.email}
                   errorMessage={errors.email?.message}
+                  required
                 />
               </Grid>
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} variant="contained" sx={{borderRadius:15}}>
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              sx={{ borderRadius: 15 }}
+            >
               Cancel
             </Button>
-            <Button type="submit" variant="contained"  sx={{borderRadius:15}}>
+            <Button type="submit" variant="contained" sx={{ borderRadius: 15 }}>
               Submit
             </Button>
           </DialogActions>
